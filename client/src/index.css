@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=VT323&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0% 4%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 120 100% 50%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 300 100% 50%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 120 100% 50%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-mono bg-background text-foreground;
+    background-image: url('https://images.unsplash.com/photo-1510511459019-5dda7724fd87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .font-terminal {
+    font-family: 'VT323', monospace;
+  }
+}
+
+/* Glitch effect */
+.glitch-text {
+  position: relative;
+  animation: glitch-text 2s infinite;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -1px 0 theme('colors.accent.DEFAULT');
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim-1 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -1px 0 theme('colors.primary.DEFAULT');
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim-2 5s infinite linear alternate-reverse;
+}
+
+/* Terminal cursor effect */
+.terminal-cursor::after {
+  content: '_';
+  animation: terminal-blink 1.5s steps(2) infinite;
+}
+
+/* Scan lines effect */
+.scan-lines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+  z-index: 50;
+  animation: scan 4s linear infinite;
+}
+
+@keyframes glitch-text {
+  0% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  1% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  2% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  3% { text-shadow: 1px 0 theme('colors.accent.DEFAULT'), -1px 0 theme('colors.primary.DEFAULT'); }
+  4% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  5% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  6% { text-shadow: -1px 0 transparent, 1px 0 transparent; }
+  7% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  8% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  9% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  10% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  11% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  12% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  13% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  14% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  15% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  16% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  17% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  18% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  19% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  20% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  21% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  22% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  23% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  24% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  25% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  26% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  27% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  28% { text-shadow: 0.7px 0 transparent, -0.7px 0 transparent; }
+  29% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  30% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  31% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  32% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  33% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  34% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  35% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  36% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  37% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  38% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  39% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  40% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  41% { text-shadow: 50px 0 theme('colors.primary.DEFAULT'), -50px 0 theme('colors.accent.DEFAULT'); }
+  42% { text-shadow: 0 0 theme('colors.primary.DEFAULT'), 0 0 theme('colors.accent.DEFAULT'); }
+  43% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  44% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  45% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  46% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  47% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  48% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  49% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  50% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  51% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  52% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  53% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  54% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  55% { text-shadow: 1px 0.5 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  56% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  57% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  58% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  59% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  60% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  61% { text-shadow: 30px 0 theme('colors.primary.DEFAULT'), -30px 0 theme('colors.accent.DEFAULT'); }
+  62% { text-shadow: 0 0 theme('colors.primary.DEFAULT'), 0 0 theme('colors.accent.DEFAULT'); }
+  63% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  64% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  65% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  66% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  67% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  68% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  69% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  70% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  71% { text-shadow: 70px 0 theme('colors.primary.DEFAULT'), -70px 0 theme('colors.accent.DEFAULT'); }
+  72% { text-shadow: 0 0 theme('colors.primary.DEFAULT'), 0 0 theme('colors.accent.DEFAULT'); }
+  73% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  74% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  75% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  76% { text-shadow: 1px 0 theme('colors.primary.DEFAULT'), -1px 0 theme('colors.accent.DEFAULT'); }
+  77% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  78% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  79% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  80% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  81% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  82% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  83% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  84% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  85% { text-shadow: 0.5px 0 theme('colors.primary.DEFAULT'), -0.5px 0 theme('colors.accent.DEFAULT'); }
+  86% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  87% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  88% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  89% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  90% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  91% { text-shadow: 60px 0 theme('colors.primary.DEFAULT'), -60px 0 theme('colors.accent.DEFAULT'); }
+  92% { text-shadow: 0 0 theme('colors.primary.DEFAULT'), 0 0 theme('colors.accent.DEFAULT'); }
+  92% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  93% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  94% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  95% { text-shadow: 0.7px 0 theme('colors.primary.DEFAULT'), -0.7px 0 theme('colors.accent.DEFAULT'); }
+  96% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  97% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  98% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  99% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+  100% { text-shadow: -1px 0 theme('colors.primary.DEFAULT'), 1px 0 theme('colors.accent.DEFAULT'); }
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip: rect(42px, 9999px, 44px, 0); }
+  10% { clip: rect(28px, 9999px, 17px, 0); }
+  20% { clip: rect(65px, 9999px, 5px, 0); }
+  30% { clip: rect(92px, 9999px, 35px, 0); }
+  40% { clip: rect(11px, 9999px, 46px, 0); }
+  50% { clip: rect(12px, 9999px, 56px, 0); }
+  60% { clip: rect(75px, 9999px, 84px, 0); }
+  70% { clip: rect(23px, 9999px, 33px, 0); }
+  80% { clip: rect(26px, 9999px, 32px, 0); }
+  90% { clip: rect(48px, 9999px, 94px, 0); }
+  100% { clip: rect(53px, 9999px, 58px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip: rect(58px, 9999px, 76px, 0); }
+  10% { clip: rect(44px, 9999px, 33px, 0); }
+  20% { clip: rect(2px, 9999px, 33px, 0); }
+  30% { clip: rect(34px, 9999px, 7px, 0); }
+  40% { clip: rect(56px, 9999px, 30px, 0); }
+  50% { clip: rect(14px, 9999px, 15px, 0); }
+  60% { clip: rect(34px, 9999px, 10px, 0); }
+  70% { clip: rect(12px, 9999px, 43px, 0); }
+  80% { clip: rect(62px, 9999px, 73px, 0); }
+  90% { clip: rect(34px, 9999px, 45px, 0); }
+  100% { clip: rect(34px, 9999px, 65px, 0); }
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); }
+  75% { transform: translateY(100%); }
+  76% { transform: translateY(0); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes terminal-blink {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Custom scrollbar for terminal feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(120, 100%, 40%);
+}
+
+/* Security */
+.prevent-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

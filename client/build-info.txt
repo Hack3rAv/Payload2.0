@@ -1,0 +1,16 @@
+CLOUDFLARE PAGES DEPLOYMENT GUIDE
+
+STEP 1: Build your React app first
+- You need to run: npm run build
+- This creates a 'dist' folder
+- Upload the 'dist' folder contents to Pages
+
+STEP 2: Update API URL
+- Before building, update API_BASE_URL in src/lib/api.ts
+- Set it to your Workers URL (you'll get this after Workers deployment)
+
+STEP 3: Framework Settings for Pages
+- Framework preset: React
+- Build command: npm run build  
+- Build output directory: dist
+- Root directory: (leave blank or set to 'client' if needed)
