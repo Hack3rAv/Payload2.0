@@ -2,7 +2,7 @@ import { apiRequest } from './queryClient';
 import { Payload } from '@shared/schema';
 
 // Payload API functions
-const API_BASE_URL = 'https://payload-api.avrodipff.workers.dev/'; // Replace with your Workers API URL
+const API_BASE_URL = 'https://pay-test.avrodipff.workers.dev'; // Replace with your Workers API URL
 
 export const fetchPayloads = async (token: string): Promise<Payload[]> => {
   const response = await fetch(`${API_BASE_URL}/api/payloads`, {
