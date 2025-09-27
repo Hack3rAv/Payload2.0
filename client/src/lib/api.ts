@@ -1,22 +1,4 @@
-import { apiRequest } from './queryClient';
 import { Payload } from '@shared/schema';
-
-// Payload API functions
-const API_BASE_URL = 'https://pay-test.avrodipff.workers.dev'; // Replace with your Workers API URL
-
-export const fetchPayloads = async (token: string): Promise<Payload[]> => {
-  const response = await fetch(`${API_BASE_URL}/api/payloads`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch payloads');
-  }
-
-  return response.json();
-};
 
 export interface UploadPayloadData {
   file: File;
@@ -25,6 +7,23 @@ export interface UploadPayloadData {
   listeningDetails: string;
 }
 
+const API_BASE_URL = 'https://pay-test.avrodipff.workers.dev';
+
+const getAuthHeaders = (token: string) => ({
+  'Authorization': `Bearer ${token}`,
+});
+
+// Fetch all payloads
+export const fetchPayloads = async (token: string): Promise<Payload[]> => {
+  const res = await fetch(`${API_BASE_URL}/api/payloads`, {
+    headers: getAuthHeaders(token),
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch payloads');
+  return res.json();
+};
+
+// Upload a payload
 export const uploadPayload = async (data: UploadPayloadData, token: string): Promise<Payload> => {
   const formData = new FormData();
   formData.append('file', data.file);
@@ -32,66 +31,51 @@ export const uploadPayload = async (data: UploadPayloadData, token: string): Pro
   formData.append('description', data.description);
   formData.append('listeningDetails', data.listeningDetails);
 
-  const response = await fetch(`${API_BASE_URL}/api/payloads`, {
+  const res = await fetch(`${API_BASE_URL}/api/payloads`, {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
+    headers: getAuthHeaders(token),
     body: formData,
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to upload payload');
-  }
-
-  return response.json();
+  if (!res.ok) throw new Error('Failed to upload payload');
+  return res.json();
 };
 
+// Delete a payload
 export const deletePayload = async (id: number, token: string): Promise<void> => {
-  const response = await fetch(`${API_BASE_URL}/api/payloads/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/api/payloads/${id}`, {
     method: 'DELETE',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
+    headers: getAuthHeaders(token),
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to delete payload');
-  }
+  if (!res.ok) throw new Error('Failed to delete payload');
 };
 
-export const getDownloadUrl = (id: number): string => {
-  return `${API_BASE_URL}/api/payloads/download/${id}`;
-};
+// Get download URL
+export const getDownloadUrl = (id: number) => `${API_BASE_URL}/api/payloads/download/${id}`;
 
-// Auth API functions
+// Login
 export const login = async (password: string): Promise<{ token: string; user: any }> => {
-  const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+  const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ password })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password }),
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Login failed');
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || 'Login failed');
   }
 
-  return response.json();
+  return res.json();
 };
 
+// Get current user
 export const getCurrentUser = async (token: string) => {
-  const response = await fetch(`${API_BASE_URL}/api/auth/current-user`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
+  const res = await fetch(`${API_BASE_URL}/api/auth/current-user`, {
+    headers: getAuthHeaders(token),
   });
 
-  if (!response.ok) {
-    return { user: null };
-  }
-
-  return response.json();
+  if (!res.ok) return { user: null };
+  return res.json();
 };
